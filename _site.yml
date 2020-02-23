@@ -4,7 +4,7 @@ navbar:
   title: "Lin Xiong"
   left:
     - text: "CV"
-      href: research.html
+      href: files/CV_lin.pdf
     - text: "Research"
       href: talks.html
     - text: "Publications"
@@ -12,10 +12,8 @@ navbar:
     - text: "Presentations"
       href: teaching.html
   right:
-    - icon: fa-envelope fa-lg
-      href: contact.html
     - icon: fa-github fa-lg
-      href: http://github.com/zabore
+      href: https://github.com/hopebear/
     - icon: fa-twitter fa-lg
       href: https://twitter.com/Houston_hopelin
     - icon: fa-linkedin fa-lg
