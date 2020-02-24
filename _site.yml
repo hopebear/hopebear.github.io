@@ -6,11 +6,13 @@ navbar:
     - text: "CV"
       href: files/CV_lin.pdf
     - text: "Research"
-      href: talks.html
+      href: research.html
     - text: "Publications"
-      href: software.html
+      href: paper.html
     - text: "Presentations"
-      href: teaching.html
+      href: Presentations.html
+    - text: "Blog"
+      href: blog.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/hopebear/
