@@ -5,7 +5,7 @@
 XXXXXXXXXEmail Read ScriptXXXXXXXX
 
 ```{r, echo=FALSE}
-htmltools::includeHTML("ReadGmailV2_2020.py.html")
+htmltools::includeHTML("ReadGmailV2_2020_blog.py.html")
 ```
 
 XXXXXXXXXX

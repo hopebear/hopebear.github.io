@@ -326,7 +326,7 @@ $(document).ready(function () {
 <p>XXXXXXXXXEmail Read ScriptXXXXXXXX</p>
 <html>
 <head>
-<title>ReadGmailV2_2020.py</title>
+<title>ReadGmailV2_2020_blog.py</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 .ln { color: #999999; font-weight: normal; font-style: normal; }
@@ -341,99 +341,100 @@ $(document).ready(function () {
 <TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
 <TR><TD><CENTER>
 <FONT FACE="Arial, Helvetica" COLOR="#000000">
-ReadGmailV2_2020.py</FONT>
+ReadGmailV2_2020_blog.py</FONT>
 </center></TD></TR></TABLE>
 <pre>
 <a name="l1"><span class="ln">1    </span></a><span class="s0">import </span><span class="s1">imaplib, email, os, glob 
 <a name="l2"><span class="ln">2    </span></a></span><span class="s2">#Input email address and password.</span><span class="s1"> 
-<a name="l3"><span class="ln">3    </span></a>EMAIL  = </span><span class="s3">&quot;gpsandlidar2018@gmail.com&quot;</span><span class="s1"> 
-<a name="l4"><span class="ln">4    </span></a>PWD    = </span><span class="s3">&quot;12345aA!&quot;</span><span class="s1"> 
-<a name="l5"><span class="ln">5    </span></a></span><span class="s2">#SMTP_SERVER = &quot;imap.126.com&quot;</span><span class="s1"> 
-<a name="l6"><span class="ln">6    </span></a>SMTP_SERVER = </span><span class="s3">&quot;imap.gmail.com&quot;</span><span class="s1"> 
-<a name="l7"><span class="ln">7    </span></a>SMTP_PORT   = </span><span class="s4">993</span><span class="s1"> 
-<a name="l8"><span class="ln">8    </span></a></span><span class="s2">#Emails that contain GPS data information</span><span class="s1"> 
-<a name="l9"><span class="ln">9    </span></a>EmailContent=</span><span class="s3">&quot;2019&quot;</span><span class="s1"> 
-<a name="l10"><span class="ln">10   </span></a></span><span class="s0">def </span><span class="s1">read_email_from_gmail(): 
-<a name="l11"><span class="ln">11   </span></a>    </span><span class="s0">try</span><span class="s1">: 
-<a name="l12"><span class="ln">12   </span></a>        mail = imaplib.IMAP4_SSL(SMTP_SERVER) 
-<a name="l13"><span class="ln">13   </span></a>        mail.login(EMAIL,PWD) 
-<a name="l14"><span class="ln">14   </span></a>        mail.select(</span><span class="s3">'inbox'</span><span class="s1">) 
-<a name="l15"><span class="ln">15   </span></a>        type, data = mail.search(</span><span class="s0">None</span><span class="s1">, </span><span class="s3">'ALL'</span><span class="s1">) 
-<a name="l16"><span class="ln">16   </span></a>        mail_ids = data[</span><span class="s4">0</span><span class="s1">] 
-<a name="l17"><span class="ln">17   </span></a>        id_list = mail_ids.split() 
-<a name="l18"><span class="ln">18   </span></a>        first_email_id = int(id_list[</span><span class="s4">0</span><span class="s1">]) 
-<a name="l19"><span class="ln">19   </span></a>        </span><span class="s2">#first_email_id = int(id_list[-120])</span><span class="s1"> 
-<a name="l20"><span class="ln">20   </span></a>        latest_email_id = int(id_list[-</span><span class="s4">1</span><span class="s1">]) 
-<a name="l21"><span class="ln">21   </span></a>        print (</span><span class="s3">&quot;First email: {}; Last email: {}&quot;</span><span class="s1">.format(first_email_id ,latest_email_id )) 
-<a name="l22"><span class="ln">22   </span></a>        count = </span><span class="s4">0</span><span class="s1"> 
-<a name="l23"><span class="ln">23   </span></a>        </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(latest_email_id,first_email_id, -</span><span class="s4">1</span><span class="s1">): 
-<a name="l24"><span class="ln">24   </span></a>            type, data = mail.fetch(str(i), </span><span class="s3">'(RFC822)'</span><span class="s1">) 
-<a name="l25"><span class="ln">25   </span></a>            </span><span class="s0">for </span><span class="s1">response_part </span><span class="s0">in </span><span class="s1">data: 
-<a name="l26"><span class="ln">26   </span></a>                </span><span class="s0">if </span><span class="s1">isinstance(response_part, tuple): 
-<a name="l27"><span class="ln">27   </span></a>                    msg = email.message_from_string(response_part[</span><span class="s4">1</span><span class="s1">].decode(</span><span class="s3">'utf-8'</span><span class="s1">)) 
-<a name="l28"><span class="ln">28   </span></a>                    email_subject = msg[</span><span class="s3">'subject'</span><span class="s1">] 
-<a name="l29"><span class="ln">29   </span></a>                    email_from = msg[</span><span class="s3">'from'</span><span class="s1">] 
-<a name="l30"><span class="ln">30   </span></a>                    </span><span class="s0">if </span><span class="s1">EmailContent  </span><span class="s0">in </span><span class="s1">email_subject: 
-<a name="l31"><span class="ln">31   </span></a>                      count=count+</span><span class="s4">1</span><span class="s1"> 
-<a name="l32"><span class="ln">32   </span></a>                      print (</span><span class="s3">&quot;Number of email: &quot;</span><span class="s1">, count) 
-<a name="l33"><span class="ln">33   </span></a>                      print (</span><span class="s3">'Subject : ' </span><span class="s1">+ email_subject + </span><span class="s3">'  From : ' </span><span class="s1">+ email_from + </span><span class="s3">'</span><span class="s0">\n</span><span class="s3">'</span><span class="s1">) 
-<a name="l34"><span class="ln">34   </span></a>                      current_directory = os.getcwd() 
-<a name="l35"><span class="ln">35   </span></a>                      final_directory = os.path.join(current_directory, </span><span class="s3">r'Emails'</span><span class="s1">) 
-<a name="l36"><span class="ln">36   </span></a>                      </span><span class="s0">if not </span><span class="s1">os.path.exists(final_directory): 
-<a name="l37"><span class="ln">37   </span></a>                          os.makedirs(final_directory) 
-<a name="l38"><span class="ln">38   </span></a>                      print (</span><span class="s3">&quot;Work directory: &quot; </span><span class="s1">+ os.getcwd()) 
-<a name="l39"><span class="ln">39   </span></a>                      save_string=str(</span><span class="s3">&quot;OPUSemail_%03d.txt&quot; </span><span class="s1">%(count)) 
-<a name="l40"><span class="ln">40   </span></a>                      </span><span class="s0">with </span><span class="s1">open(os.path.join(final_directory, save_string), </span><span class="s3">'w'</span><span class="s1">) </span><span class="s0">as </span><span class="s1">outfile: 
-<a name="l41"><span class="ln">41   </span></a>                          outfile.write(str(msg)) 
-<a name="l42"><span class="ln">42   </span></a>                          outfile.close() 
-<a name="l43"><span class="ln">43   </span></a>    </span><span class="s0">except </span><span class="s1">Exception </span><span class="s0">as </span><span class="s1">e: 
-<a name="l44"><span class="ln">44   </span></a>        print (str(e)) 
-<a name="l45"><span class="ln">45   </span></a> 
-<a name="l46"><span class="ln">46   </span></a>current_directory = os.getcwd() 
-<a name="l47"><span class="ln">47   </span></a>final_directory = os.path.join(current_directory, </span><span class="s3">r'Emails'</span><span class="s1">) 
-<a name="l48"><span class="ln">48   </span></a>os.chdir(final_directory ) 
-<a name="l49"><span class="ln">49   </span></a></span><span class="s0">for </span><span class="s1">file </span><span class="s0">in </span><span class="s1">glob.glob(</span><span class="s3">&quot;OPUS*txt&quot;</span><span class="s1">): 
-<a name="l50"><span class="ln">50   </span></a>     os.remove(file) 
-<a name="l51"><span class="ln">51   </span></a>os.chdir(current_directory) 
-<a name="l52"><span class="ln">52   </span></a>read_email_from_gmail() 
-<a name="l53"><span class="ln">53   </span></a>os.chdir(final_directory) 
-<a name="l54"><span class="ln">54   </span></a>print (</span><span class="s3">&quot;Name,Date, Start, End,  NAD83_X, NAD83_Y, NAD83_Z, UTM_East, UTM_North, Ortho,EL,OBS_USED, RMS&quot;</span><span class="s1">) 
-<a name="l55"><span class="ln">55   </span></a>filesave = open(</span><span class="s3">&quot;GPS.txt&quot;</span><span class="s1">, </span><span class="s3">&quot;w&quot;</span><span class="s1">) 
-<a name="l56"><span class="ln">56   </span></a>filesave.write(</span><span class="s3">&quot;Name,Date,Start,End,NAD83_X,NAD83_Y,NAD83_Z,UTM_East,UTM_North,,Ortho,EL,OBS_USED,RMS</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">) 
-<a name="l57"><span class="ln">57   </span></a></span><span class="s0">for </span><span class="s1">file </span><span class="s0">in </span><span class="s1">glob.glob(</span><span class="s3">&quot;OPUS*txt&quot;</span><span class="s1">): 
-<a name="l58"><span class="ln">58   </span></a>    </span><span class="s2"># Read email files</span><span class="s1"> 
-<a name="l59"><span class="ln">59   </span></a>    file1 = open(file, </span><span class="s3">'r'</span><span class="s1">) 
-<a name="l60"><span class="ln">60   </span></a>    Lines = file1.readlines() 
-<a name="l61"><span class="ln">61   </span></a>    </span><span class="s0">for </span><span class="s1">line </span><span class="s0">in </span><span class="s1">Lines: 
-<a name="l62"><span class="ln">62   </span></a>        </span><span class="s2"># Extract information line by line.</span><span class="s1"> 
-<a name="l63"><span class="ln">63   </span></a>        </span><span class="s0">if  </span><span class="s3">'RINEX FILE' </span><span class="s0">in </span><span class="s1">line: 
-<a name="l64"><span class="ln">64   </span></a>             Name = line.split()[</span><span class="s4">2</span><span class="s1">] 
-<a name="l65"><span class="ln">65   </span></a>        </span><span class="s0">if  </span><span class="s3">'SOFTWARE' </span><span class="s0">in </span><span class="s1">line: 
-<a name="l66"><span class="ln">66   </span></a>             Date = line.split()[</span><span class="s4">6</span><span class="s1">] 
-<a name="l67"><span class="ln">67   </span></a>             Start = line.split()[</span><span class="s4">7</span><span class="s1">] 
-<a name="l68"><span class="ln">68   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;EPHEMERIS&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l69"><span class="ln">69   </span></a>             End = line.split()[</span><span class="s4">5</span><span class="s1">] 
-<a name="l70"><span class="ln">70   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;OBS USED&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l71"><span class="ln">71   </span></a>            OBS_USED = line.split()[</span><span class="s4">9</span><span class="s1">] 
-<a name="l72"><span class="ln">72   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;ARP HEIGHT&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l73"><span class="ln">73   </span></a>             RMS = line.split()[</span><span class="s4">5</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">,</span><span class="s3">&quot;&quot;</span><span class="s1">) 
-<a name="l74"><span class="ln">74   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;X:&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l75"><span class="ln">75   </span></a>            NAD83_X = line.split()[</span><span class="s4">1</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
-<a name="l76"><span class="ln">76   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Y:&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l77"><span class="ln">77   </span></a>            NAD83_Y = line.split()[</span><span class="s4">1</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
-<a name="l78"><span class="ln">78   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Z:&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l79"><span class="ln">79   </span></a>            NAD83_Z = line.split()[</span><span class="s4">1</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
-<a name="l80"><span class="ln">80   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;EL HGT:&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l81"><span class="ln">81   </span></a>            EL = line.split()[</span><span class="s4">2</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
-<a name="l82"><span class="ln">82   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;ORTHO HGT:&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l83"><span class="ln">83   </span></a>            Ortho = line.split()[</span><span class="s4">2</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
-<a name="l84"><span class="ln">84   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Northing&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l85"><span class="ln">85   </span></a>            UTM_North = line.split()[</span><span class="s4">3</span><span class="s1">] 
-<a name="l86"><span class="ln">86   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Easting&quot; </span><span class="s0">in </span><span class="s1">line: 
-<a name="l87"><span class="ln">87   </span></a>            UTM_East = line.split()[</span><span class="s4">3</span><span class="s1">] 
-<a name="l88"><span class="ln">88   </span></a>    print (Name,Date, Start, End,  NAD83_X, NAD83_Y, NAD83_Z, UTM_East, UTM_North, Ortho,EL,  OBS_USED, RMS) 
-<a name="l89"><span class="ln">89   </span></a>    filesave.write(</span><span class="s3">&quot;{},{},{},{},{},{},{},{},{},{},{},{},{}</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">.format(Name,Date, Start, End,  NAD83_X, NAD83_Y, NAD83_Z, UTM_East, UTM_North, Ortho, EL, OBS_USED, RMS)) 
-<a name="l90"><span class="ln">90   </span></a>filesave.close()</span></pre>
+<a name="l3"><span class="ln">3    </span></a>EMAIL  = </span><span class="s3">&quot;XXXXX@gmail.com&quot;</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a>PWD    = </span><span class="s3">&quot;XXXX&quot;</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s2">#SMTP_SERVER = &quot;imap.126.com&quot;</span><span class="s1"> 
+<a name="l7"><span class="ln">7    </span></a>SMTP_SERVER = </span><span class="s3">&quot;imap.gmail.com&quot;</span><span class="s1"> 
+<a name="l8"><span class="ln">8    </span></a>SMTP_PORT   = </span><span class="s4">993</span><span class="s1"> 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s2">#Emails that contain GPS data information</span><span class="s1"> 
+<a name="l10"><span class="ln">10   </span></a>EmailContent=</span><span class="s3">&quot;2019&quot;</span><span class="s1"> 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s0">def </span><span class="s1">read_email_from_gmail(): 
+<a name="l12"><span class="ln">12   </span></a>    </span><span class="s0">try</span><span class="s1">: 
+<a name="l13"><span class="ln">13   </span></a>        mail = imaplib.IMAP4_SSL(SMTP_SERVER) 
+<a name="l14"><span class="ln">14   </span></a>        mail.login(EMAIL,PWD) 
+<a name="l15"><span class="ln">15   </span></a>        mail.select(</span><span class="s3">'inbox'</span><span class="s1">) 
+<a name="l16"><span class="ln">16   </span></a>        type, data = mail.search(</span><span class="s0">None</span><span class="s1">, </span><span class="s3">'ALL'</span><span class="s1">) 
+<a name="l17"><span class="ln">17   </span></a>        mail_ids = data[</span><span class="s4">0</span><span class="s1">] 
+<a name="l18"><span class="ln">18   </span></a>        id_list = mail_ids.split() 
+<a name="l19"><span class="ln">19   </span></a>        first_email_id = int(id_list[</span><span class="s4">0</span><span class="s1">]) 
+<a name="l20"><span class="ln">20   </span></a>        </span><span class="s2">#first_email_id = int(id_list[-120])</span><span class="s1"> 
+<a name="l21"><span class="ln">21   </span></a>        latest_email_id = int(id_list[-</span><span class="s4">1</span><span class="s1">]) 
+<a name="l22"><span class="ln">22   </span></a>        print (</span><span class="s3">&quot;First email: {}; Last email: {}&quot;</span><span class="s1">.format(first_email_id ,latest_email_id )) 
+<a name="l23"><span class="ln">23   </span></a>        count = </span><span class="s4">0</span><span class="s1"> 
+<a name="l24"><span class="ln">24   </span></a>        </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(latest_email_id,first_email_id, -</span><span class="s4">1</span><span class="s1">): 
+<a name="l25"><span class="ln">25   </span></a>            type, data = mail.fetch(str(i), </span><span class="s3">'(RFC822)'</span><span class="s1">) 
+<a name="l26"><span class="ln">26   </span></a>            </span><span class="s0">for </span><span class="s1">response_part </span><span class="s0">in </span><span class="s1">data: 
+<a name="l27"><span class="ln">27   </span></a>                </span><span class="s0">if </span><span class="s1">isinstance(response_part, tuple): 
+<a name="l28"><span class="ln">28   </span></a>                    msg = email.message_from_string(response_part[</span><span class="s4">1</span><span class="s1">].decode(</span><span class="s3">'utf-8'</span><span class="s1">)) 
+<a name="l29"><span class="ln">29   </span></a>                    email_subject = msg[</span><span class="s3">'subject'</span><span class="s1">] 
+<a name="l30"><span class="ln">30   </span></a>                    email_from = msg[</span><span class="s3">'from'</span><span class="s1">] 
+<a name="l31"><span class="ln">31   </span></a>                    </span><span class="s0">if </span><span class="s1">EmailContent  </span><span class="s0">in </span><span class="s1">email_subject: 
+<a name="l32"><span class="ln">32   </span></a>                      count=count+</span><span class="s4">1</span><span class="s1"> 
+<a name="l33"><span class="ln">33   </span></a>                      print (</span><span class="s3">&quot;Number of email: &quot;</span><span class="s1">, count) 
+<a name="l34"><span class="ln">34   </span></a>                      print (</span><span class="s3">'Subject : ' </span><span class="s1">+ email_subject + </span><span class="s3">'  From : ' </span><span class="s1">+ email_from + </span><span class="s3">'</span><span class="s0">\n</span><span class="s3">'</span><span class="s1">) 
+<a name="l35"><span class="ln">35   </span></a>                      current_directory = os.getcwd() 
+<a name="l36"><span class="ln">36   </span></a>                      final_directory = os.path.join(current_directory, </span><span class="s3">r'Emails'</span><span class="s1">) 
+<a name="l37"><span class="ln">37   </span></a>                      </span><span class="s0">if not </span><span class="s1">os.path.exists(final_directory): 
+<a name="l38"><span class="ln">38   </span></a>                          os.makedirs(final_directory) 
+<a name="l39"><span class="ln">39   </span></a>                      print (</span><span class="s3">&quot;Work directory: &quot; </span><span class="s1">+ os.getcwd()) 
+<a name="l40"><span class="ln">40   </span></a>                      save_string=str(</span><span class="s3">&quot;OPUSemail_%03d.txt&quot; </span><span class="s1">%(count)) 
+<a name="l41"><span class="ln">41   </span></a>                      </span><span class="s0">with </span><span class="s1">open(os.path.join(final_directory, save_string), </span><span class="s3">'w'</span><span class="s1">) </span><span class="s0">as </span><span class="s1">outfile: 
+<a name="l42"><span class="ln">42   </span></a>                          outfile.write(str(msg)) 
+<a name="l43"><span class="ln">43   </span></a>                          outfile.close() 
+<a name="l44"><span class="ln">44   </span></a>    </span><span class="s0">except </span><span class="s1">Exception </span><span class="s0">as </span><span class="s1">e: 
+<a name="l45"><span class="ln">45   </span></a>        print (str(e)) 
+<a name="l46"><span class="ln">46   </span></a> 
+<a name="l47"><span class="ln">47   </span></a>current_directory = os.getcwd() 
+<a name="l48"><span class="ln">48   </span></a>final_directory = os.path.join(current_directory, </span><span class="s3">r'Emails'</span><span class="s1">) 
+<a name="l49"><span class="ln">49   </span></a>os.chdir(final_directory ) 
+<a name="l50"><span class="ln">50   </span></a></span><span class="s0">for </span><span class="s1">file </span><span class="s0">in </span><span class="s1">glob.glob(</span><span class="s3">&quot;OPUS*txt&quot;</span><span class="s1">): 
+<a name="l51"><span class="ln">51   </span></a>     os.remove(file) 
+<a name="l52"><span class="ln">52   </span></a>os.chdir(current_directory) 
+<a name="l53"><span class="ln">53   </span></a>read_email_from_gmail() 
+<a name="l54"><span class="ln">54   </span></a>os.chdir(final_directory) 
+<a name="l55"><span class="ln">55   </span></a>print (</span><span class="s3">&quot;Name,Date, Start, End,  NAD83_X, NAD83_Y, NAD83_Z, UTM_East, UTM_North, Ortho,EL,OBS_USED, RMS&quot;</span><span class="s1">) 
+<a name="l56"><span class="ln">56   </span></a>filesave = open(</span><span class="s3">&quot;GPS.txt&quot;</span><span class="s1">, </span><span class="s3">&quot;w&quot;</span><span class="s1">) 
+<a name="l57"><span class="ln">57   </span></a>filesave.write(</span><span class="s3">&quot;Name,Date,Start,End,NAD83_X,NAD83_Y,NAD83_Z,UTM_East,UTM_North,,Ortho,EL,OBS_USED,RMS</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">) 
+<a name="l58"><span class="ln">58   </span></a></span><span class="s0">for </span><span class="s1">file </span><span class="s0">in </span><span class="s1">glob.glob(</span><span class="s3">&quot;OPUS*txt&quot;</span><span class="s1">): 
+<a name="l59"><span class="ln">59   </span></a>    </span><span class="s2"># Read email files</span><span class="s1"> 
+<a name="l60"><span class="ln">60   </span></a>    file1 = open(file, </span><span class="s3">'r'</span><span class="s1">) 
+<a name="l61"><span class="ln">61   </span></a>    Lines = file1.readlines() 
+<a name="l62"><span class="ln">62   </span></a>    </span><span class="s0">for </span><span class="s1">line </span><span class="s0">in </span><span class="s1">Lines: 
+<a name="l63"><span class="ln">63   </span></a>        </span><span class="s2"># Extract information line by line.</span><span class="s1"> 
+<a name="l64"><span class="ln">64   </span></a>        </span><span class="s0">if  </span><span class="s3">'RINEX FILE' </span><span class="s0">in </span><span class="s1">line: 
+<a name="l65"><span class="ln">65   </span></a>             Name = line.split()[</span><span class="s4">2</span><span class="s1">] 
+<a name="l66"><span class="ln">66   </span></a>        </span><span class="s0">if  </span><span class="s3">'SOFTWARE' </span><span class="s0">in </span><span class="s1">line: 
+<a name="l67"><span class="ln">67   </span></a>             Date = line.split()[</span><span class="s4">6</span><span class="s1">] 
+<a name="l68"><span class="ln">68   </span></a>             Start = line.split()[</span><span class="s4">7</span><span class="s1">] 
+<a name="l69"><span class="ln">69   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;EPHEMERIS&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l70"><span class="ln">70   </span></a>             End = line.split()[</span><span class="s4">5</span><span class="s1">] 
+<a name="l71"><span class="ln">71   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;OBS USED&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l72"><span class="ln">72   </span></a>            OBS_USED = line.split()[</span><span class="s4">9</span><span class="s1">] 
+<a name="l73"><span class="ln">73   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;ARP HEIGHT&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l74"><span class="ln">74   </span></a>             RMS = line.split()[</span><span class="s4">5</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">,</span><span class="s3">&quot;&quot;</span><span class="s1">) 
+<a name="l75"><span class="ln">75   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;X:&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l76"><span class="ln">76   </span></a>            NAD83_X = line.split()[</span><span class="s4">1</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
+<a name="l77"><span class="ln">77   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Y:&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l78"><span class="ln">78   </span></a>            NAD83_Y = line.split()[</span><span class="s4">1</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
+<a name="l79"><span class="ln">79   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Z:&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l80"><span class="ln">80   </span></a>            NAD83_Z = line.split()[</span><span class="s4">1</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
+<a name="l81"><span class="ln">81   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;EL HGT:&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l82"><span class="ln">82   </span></a>            EL = line.split()[</span><span class="s4">2</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
+<a name="l83"><span class="ln">83   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;ORTHO HGT:&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l84"><span class="ln">84   </span></a>            Ortho = line.split()[</span><span class="s4">2</span><span class="s1">].replace(</span><span class="s3">&quot;(m)&quot;</span><span class="s1">, </span><span class="s3">&quot;&quot;</span><span class="s1">) 
+<a name="l85"><span class="ln">85   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Northing&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l86"><span class="ln">86   </span></a>            UTM_North = line.split()[</span><span class="s4">3</span><span class="s1">] 
+<a name="l87"><span class="ln">87   </span></a>        </span><span class="s0">if </span><span class="s3">&quot;Easting&quot; </span><span class="s0">in </span><span class="s1">line: 
+<a name="l88"><span class="ln">88   </span></a>            UTM_East = line.split()[</span><span class="s4">3</span><span class="s1">] 
+<a name="l89"><span class="ln">89   </span></a>    print (Name,Date, Start, End,  NAD83_X, NAD83_Y, NAD83_Z, UTM_East, UTM_North, Ortho,EL,  OBS_USED, RMS) 
+<a name="l90"><span class="ln">90   </span></a>    filesave.write(</span><span class="s3">&quot;{},{},{},{},{},{},{},{},{},{},{},{},{}</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">.format(Name,Date, Start, End,  NAD83_X, NAD83_Y, NAD83_Z, UTM_East, UTM_North, Ortho, EL, OBS_USED, RMS)) 
+<a name="l91"><span class="ln">91   </span></a>filesave.close()</span></pre>
 </body>
 </html>
 <p>XXXXXXXXXX</p>
