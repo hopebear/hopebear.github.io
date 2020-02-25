@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>OPUS_uploadPHDversion.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,128); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,0,128); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+OPUS_uploadPHDversion.py</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">###Save the webdriver and  script under one folder.</span><span class="s1"> 
+</span><span class="s0">##By Lin  20170308.</span><span class="s1"> 
+</span><span class="s0">#Path of the webdriver.</span><span class="s1"> 
+PathProgram=</span><span class="s2">&quot;C:\LinXiong\PythonLearning\OPUSupload\OpusVersion4&quot;</span><span class="s1"> 
+</span><span class="s0">#find your data file folder.</span><span class="s1"> 
+Path=</span><span class="s2">&quot;C:\LinXiong\PythonLearning\OPUSupload\OpusVersion4\File&quot;</span><span class="s1"> 
+</span><span class="s0">#File format</span><span class="s1"> 
+fileformat=</span><span class="s2">&quot;*17o&quot;</span><span class="s1"> 
+ 
+</span><span class="s0">#Antenna height</span><span class="s1"> 
+height=</span><span class="s3">0.0</span><span class="s1"> 
+email=</span><span class="s2">&quot;gpsandlidar2018@gmail.com&quot;</span><span class="s1"> 
+antenna=</span><span class="s2">&quot;TRM57971.00     NONE&quot;</span><span class="s1"> 
+</span><span class="s0">#antenna=&quot;TRMR10          NONE&quot;</span><span class="s1"> 
+ 
+</span><span class="s4">import </span><span class="s1">glob, os, time 
+</span><span class="s4">from </span><span class="s1">selenium </span><span class="s4">import </span><span class="s1">webdriver 
+</span><span class="s4">from </span><span class="s1">selenium.webdriver.support.ui </span><span class="s4">import </span><span class="s1">WebDriverWait 
+</span><span class="s4">from </span><span class="s1">selenium.webdriver.support </span><span class="s4">import </span><span class="s1">expected_conditions </span><span class="s4">as </span><span class="s1">EC 
+</span><span class="s4">from </span><span class="s1">selenium.common.exceptions </span><span class="s4">import </span><span class="s1">TimeoutException 
+</span><span class="s4">from </span><span class="s1">selenium.common.exceptions </span><span class="s4">import </span><span class="s1">UnexpectedAlertPresentException 
+</span><span class="s4">from </span><span class="s1">selenium.common.exceptions </span><span class="s4">import </span><span class="s1">NoAlertPresentException 
+</span><span class="s4">from </span><span class="s1">selenium.common.exceptions </span><span class="s4">import </span><span class="s1">NoSuchElementException 
+</span><span class="s4">from </span><span class="s1">selenium.webdriver.common.keys </span><span class="s4">import </span><span class="s1">Keys 
+ 
+</span><span class="s4">def </span><span class="s1">upload(): 
+    time.sleep(</span><span class="s3">1</span><span class="s1">) 
+    </span><span class="s4">try</span><span class="s1">: 
+        driver.find_element_by_class_name(</span><span class="s2">&quot;declineButton&quot;</span><span class="s1">).click() 
+ 
+    </span><span class="s4">except </span><span class="s1">NoSuchElementException: 
+         print (</span><span class="s2">&quot;No survey pop up!&quot;</span><span class="s1">) 
+ 
+    elem = driver.find_element_by_name(</span><span class="s2">&quot;uploadfile&quot;</span><span class="s1">) 
+    elem.clear() 
+    elem.send_keys(</span><span class="s2">&quot;{}&quot;</span><span class="s1">.format(filepath)) 
+    driver.find_element_by_xpath(</span><span class="s2">&quot;//*[@id='container']/form/div[1]/span&quot;</span><span class="s1">).click() 
+    time.sleep(</span><span class="s3">2</span><span class="s1">) 
+    user_input = driver.find_element_by_xpath(</span><span class="s2">&quot;/html/body/span/span/span[1]/input&quot;</span><span class="s1">) 
+    user_input.send_keys(antenna) 
+    time.sleep(</span><span class="s3">2</span><span class="s1">) 
+    driver.find_element_by_css_selector(</span><span class="s2">&quot;#select2-ant_type-results &gt; li:nth-child(1)&quot;</span><span class="s1">).click() 
+    elem = driver.find_element_by_name(</span><span class="s2">&quot;height&quot;</span><span class="s1">) 
+    elem.clear() 
+    elem.send_keys(</span><span class="s2">&quot;{}&quot;</span><span class="s1">.format(height)) 
+    elem = driver.find_element_by_name(</span><span class="s2">&quot;email_address&quot;</span><span class="s1">) 
+    elem.clear() 
+    elem.send_keys(</span><span class="s2">&quot;{}&quot;</span><span class="s1">.format(email)) 
+    elem.send_keys(Keys.RETURN) 
+    driver.find_element_by_id(</span><span class="s2">&quot;Rapid-Static&quot;</span><span class="s1">).click() 
+    </span><span class="s4">try</span><span class="s1">: 
+       WebDriverWait(driver, </span><span class="s3">2</span><span class="s1">).until(EC.alert_is_present()) 
+       alert = driver.switch_to_alert() 
+       alert.accept() 
+    </span><span class="s4">except </span><span class="s1">TimeoutException: 
+       print (</span><span class="s2">&quot;No antenna height alert!&quot;</span><span class="s1">) 
+    time.sleep(</span><span class="s3">1</span><span class="s1">) 
+    driver.back() 
+ 
+ 
+ 
+driver = webdriver.Chrome(</span><span class="s2">&quot;{}/chromedriver&quot;</span><span class="s1">.format(PathProgram)) 
+driver.get(</span><span class="s2">&quot;http://www.ngs.noaa.gov/OPUS/&quot;</span><span class="s1">) 
+ 
+os.chdir(</span><span class="s2">&quot;{}&quot;</span><span class="s1">.format(Path)) 
+count=</span><span class="s3">0</span><span class="s1"> 
+</span><span class="s4">for </span><span class="s1">file </span><span class="s4">in </span><span class="s1">glob.glob(fileformat): 
+   print (</span><span class="s2">&quot;UploadFile:  &quot;</span><span class="s1">, os.path.abspath(file)) 
+   filepath=</span><span class="s2">&quot;{}&quot;</span><span class="s1">.format(os.path.abspath(file)) 
+   </span><span class="s0"># Count time</span><span class="s1"> 
+   start_time = time.time() 
+   </span><span class="s4">try</span><span class="s1">: 
+       upload() 
+   </span><span class="s4">except </span><span class="s1">(TimeoutException,UnexpectedAlertPresentException,NoAlertPresentException,NoSuchElementException) </span><span class="s4">as </span><span class="s1">e: 
+ 
+       print (</span><span class="s2">&quot;Webpage no response &quot;</span><span class="s1">) 
+       time.sleep(</span><span class="s3">10</span><span class="s1">) 
+       driver.execute_script(</span><span class="s2">&quot;window.open('http://www.google.com');&quot;</span><span class="s1">) 
+       time.sleep(</span><span class="s3">2</span><span class="s1">) 
+       driver.switch_to.window(driver.window_handles[</span><span class="s3">1</span><span class="s1">]) 
+       driver.get(</span><span class="s2">&quot;http://www.ngs.noaa.gov/OPUS/&quot;</span><span class="s1">) 
+       upload() 
+   count=count+</span><span class="s3">1</span><span class="s1"> 
+   print (</span><span class="s2">&quot;Number of Uploaded Files: &quot;</span><span class="s1">,count) 
+   print (</span><span class="s2">'Uploading time(second) is '</span><span class="s1">, time.time() - start_time) 
+   time.sleep(</span><span class="s3">2</span><span class="s1">) 
+   print (</span><span class="s2">'Remove File'</span><span class="s1">) 
+   os.remove(file) 
+driver.quit()</span></pre>
+</body>
+</html>

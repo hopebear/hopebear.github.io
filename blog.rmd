@@ -1,1 +1,31 @@
-THis is a test
+
+
+2020-02-25, 
+
+XXXXXXXXXEmail Read ScriptXXXXXXXX
+
+```{r, echo=FALSE}
+htmltools::includeHTML("ReadGmailV2_2020.py.html")
+```
+
+XXXXXXXXXX
+
+
+
+XXXXXXXXXXUpdate GPS data upload script.
+
+```{r, echo=FALSE}
+htmltools::includeHTML("OPUS_uploadPHDversion.py.html")
+```
+
+XXXXXXXXXXXXXXXXX
+
+
+
+2020-02-24. proctor Exam01 Intro to Global Climate Change (510 students)
+
+            Thesis Writing and Formatting.
+            
+
+
+
