@@ -28,5 +28,8 @@ Office: 231 SR1
 
 </font>
 
+
+I am a fifth-year Ph.D. student of geophysics, working with Prof. G.W. Wang. I am looking for a job in academia now.
+
 <!--  ![R10 antenna](images/R10.JPG) -->
 
